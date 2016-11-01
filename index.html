@@ -2,6 +2,13 @@
 <html>
 	<head>
 		<title>assignment_1</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+			
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	</head>
 	<style>
 		body {
@@ -10,6 +17,10 @@
 		}
 		p {
 			margin:0;
+		}
+		.box{
+			display: inline-block;
+			height:30px;
 		}
 		.bigbox{
 			position:relative;
@@ -77,8 +88,10 @@
 			font-family:Arial, Times, serif;
 			margin:0;
 		}
-		#box-two{
+		#box_two{
+			height:auto;
 			position:relative;
+			display:inline-block;
 			background-color:#B7B5FF;
 		}
 		#box-three{
@@ -128,14 +141,23 @@
 			font:bold 2.5vw arial;
 			color:rgba(100,200,25,0.7);
 		}
+		.top_buttons{
+			position: fixed;
+			top:0;
+			z-index:999;
+		}
 	</style>
 	<body>
+		<button type='button' class = 'top_buttons' id = color_but>Color</button>
+		<button type='button' class = 'top_buttons' style='left:50px;' id = stop_but>Stop</button>
+		<button type='button' class = 'top_buttons' style='left:100px;' id = create_but>Create Box</button>
 		<div class='bigbox' id ='banner'>
 			<h3 id='tagline'>Welcome to the site</h3>
 			<img class='ava' id='ava' src='http://placekitten.com/g/150/150'>
 		</div>
-		<div class='bigbox' id = 'box-two'>
+		<div class='bigbox' id = 'box_two'>
 			<h4 id='name'>YaoFeng Wang</h4>
+			<p>Click "Create Box" button (top left) to see the change in different resolution</p>
 		</div>
 		<div class='bigbox' id = 'box-three'>
 			<div class='bigbox' id='inner-box'>
@@ -179,6 +201,57 @@
 		<div class='bigbox' id = 'box-five'>
 			<h3 id='bottom-tag'>Thanks for visit</h3>
 		</div>
+		<script>
+			var stop_but = document.getElementById('stop_but');
+			var color_but = document.getElementById('color_but');
+			var box_two = document.getElementById('box_two');
+			var box_three = document.getElementById('box-three');
+			var box_four = document.getElementById('box-four');
+			var changeColor;
+			var create_but = document.getElementById('create_but');
+			function randomColor(x){
+				x.style.transition = '1s';
+				var random_0_255_r = Math.floor((Math.random()*255)+1);
+				var random_0_255_g = Math.floor((Math.random()*255)+1);
+				var random_0_255_b = Math.floor((Math.random()*255)+1);
+				x.style.backgroundColor = 'rgb(' + random_0_255_r + ','+ random_0_255_g + ',' + random_0_255_b + ')';
+			}
+			function gogoColor(){
+				randomColor(box_two);
+				randomColor(box_three);
+				randomColor(box_four);
+			}
+			var i = 0;
+			create_but.onclick = function(){
+				var div1 = document.createElement('div');
+				box_two.appendChild(div1);
+				div1.className = 'col-lg-1 col-md-3 col-sm-6 col-xs-12 box'
+				div1.innerHTML = 'Box' +i;
+				randomColor(div1);
+				i+=1;
+			}
+			box_two.onclick  = function(){
+				randomColor(box_two);
+				randomColor(box_three);
+				randomColor(box_four);
+			}
+			box_three.onclick  = function(){
+				randomColor(box_two);
+				randomColor(box_three);
+				randomColor(box_four);
+			}
+			box_four.onclick  = function(){
+				randomColor(box_two);
+				randomColor(box_three);
+				randomColor(box_four);
+			}
+			stop_but.onclick = function(){
+				clearInterval(changeColor);
+			}
+			color_but.onclick = function(){
+				changeColor = setInterval(gogoColor,1000);
+			}
+		</script>
 	
 	</body>
 </html>
